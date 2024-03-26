@@ -4,7 +4,7 @@
 
 Submitted by: **Joshua Olaoye**
 
-Time spent: **~48** hours spent in total
+Time spent: **~72** hours spent in total
 
 ## Summary
 
@@ -24,9 +24,9 @@ The following REQUIRED features are completed:
 
 The following STRETCH features are implemented:
 
-- [ ] Add a query to the API request
-  - The query I added is **FILL IN HERE**
-- [ ] Build a UI to allow users to add that query
+- [x] Add a query to the API request
+  - The query I added is **id -> unique identifier for each coin**
+- [x] Build a UI to allow users to add that query
 
 The following EXTRA features are implemented:
 
@@ -42,7 +42,7 @@ My chosen API for this project is **https://api.coingecko.com/**.
 
 Here's a video / GIF that demos all of the app's implemented features:
 
-https://i.imgur.com/fJzx0NH.gif
+<img src='https://i.imgur.com/UISw2JT.gif' title='Video Demo' width='' alt='Video Demo' />
 
 GIF created with **ScreenToGif**
 
