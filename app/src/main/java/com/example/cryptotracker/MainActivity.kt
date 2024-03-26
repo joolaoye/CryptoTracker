@@ -1,11 +1,14 @@
 package com.example.cryptotracker
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var footerLayout : ConstraintLayout
     private lateinit var showMoreButton : Button
     private var listSize = 50
+    private var lastItemSeen = 0
 
     private val apiKey = "CG-7EGf9bH9nooFSJr3s6uPjRnC"
 
@@ -39,11 +43,12 @@ class MainActivity : AppCompatActivity() {
         showMoreButton = findViewById(R.id.showMore)
 
         showMoreButton.setOnClickListener {
+            lastItemSeen = listSize - 2
             listSize += 50
             getCoin(listSize)
+            footerLayout.visibility = View.GONE
         }
 
-        cryptoList = mutableListOf()
         rvCrypto = findViewById(R.id.rV)
 
         rvCrypto.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -68,6 +73,18 @@ class MainActivity : AppCompatActivity() {
         return true;
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun getCoin(listSize : Int) {
         val client = AsyncHttpClient()
 
@@ -76,6 +93,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("response", "success")
 
                 val cryptoArray = json.jsonArray
+
+                cryptoList = mutableListOf()
 
                 for (i in 0 until cryptoArray.length()) {
                     val cryptoObject = cryptoArray.getJSONObject(i)
@@ -87,14 +106,15 @@ class MainActivity : AppCompatActivity() {
                     val imageUrl = cryptoObject.getString("image")
 
                     cryptoList.add(Crypto(name, symbol, price, percent_change_24h, imageUrl))
-
-                    val adapter = CryptoAdapter(cryptoList)
-                    rvCrypto.adapter = adapter
-                    rvCrypto.layoutManager = LinearLayoutManager(this@MainActivity)
-
-                    // FIX ME
-                    rvCrypto.scrollToPosition(listSize - 1)
                 }
+
+                val adapter = CryptoAdapter(cryptoList)
+                rvCrypto.adapter = adapter
+                rvCrypto.layoutManager = LinearLayoutManager(this@MainActivity)
+
+                // FIX ME
+                rvCrypto.scrollToPosition(lastItemSeen)
+                Log.d("listSize", "${cryptoList.size}, $listSize")
             }
 
             override fun onFailure(
