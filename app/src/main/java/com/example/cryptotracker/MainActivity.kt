@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
                 for (i in 0 until cryptoArray.length()) {
                     val cryptoObject = cryptoArray.getJSONObject(i)
+                    val id = cryptoObject.getString("id")
                     val name = cryptoObject.getString("name")
                     val symbol = cryptoObject.getString("symbol").uppercase()
                     val price = cryptoObject.getString("current_price").toDouble()
@@ -105,16 +107,15 @@ class MainActivity : AppCompatActivity() {
                     val percent_change_24h = String.format("%.2f", temp.toDouble()).toDouble()
                     val imageUrl = cryptoObject.getString("image")
 
-                    cryptoList.add(Crypto(name, symbol, price, percent_change_24h, imageUrl))
+                    cryptoList.add(Crypto(id, name, symbol, price, percent_change_24h, imageUrl))
                 }
 
                 val adapter = CryptoAdapter(cryptoList)
                 rvCrypto.adapter = adapter
                 rvCrypto.layoutManager = LinearLayoutManager(this@MainActivity)
+                rvCrypto.addItemDecoration(DividerItemDecoration(this@MainActivity, LinearLayoutManager.VERTICAL))
 
-                // FIX ME
                 rvCrypto.scrollToPosition(lastItemSeen)
-                Log.d("listSize", "${cryptoList.size}, $listSize")
             }
 
             override fun onFailure(

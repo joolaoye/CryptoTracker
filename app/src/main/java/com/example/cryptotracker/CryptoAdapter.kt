@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide
 class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder>() {
 
     inner class CryptoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val row : CardView
         val nameView: TextView
         val symbolView: TextView
         val priceView: TextView
@@ -19,6 +22,7 @@ class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAda
         val logoView : ImageView
 
         init {
+            row = itemView.findViewById(R.id.row)
             nameView = itemView.findViewById(R.id.name)
             symbolView = itemView.findViewById(R.id.symbol)
             priceView = itemView.findViewById(R.id.price)
@@ -57,5 +61,9 @@ class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAda
             .load(cryptos[position].imageURL)
             .centerCrop()
             .into(holder.logoView)
+
+        holder.row.setOnClickListener {
+            Toast.makeText(holder.itemView.context, "${cryptos[position].id}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
@@ -71,6 +72,7 @@ class SearchActivity : AppCompatActivity() {
 
                 for (i in 0 until cryptoArray.length()) {
                     val cryptoObject = cryptoArray.getJSONObject(i)
+                    val id = cryptoObject.getString("id")
                     val name = cryptoObject.getString("name")
                     val symbol = cryptoObject.getString("symbol").uppercase()
                     val price = cryptoObject.getString("current_price").toDouble()
@@ -78,7 +80,7 @@ class SearchActivity : AppCompatActivity() {
                     val percent_change_24h = String.format("%.2f", temp.toDouble()).toDouble()
                     val imageUrl = cryptoObject.getString("image")
 
-                    cryptoList.add(Crypto(name, symbol, price, percent_change_24h, imageUrl))
+                    cryptoList.add(Crypto(id, name, symbol, price, percent_change_24h, imageUrl))
                 }
 
                 Log.d("test", cryptoList.toString())
@@ -86,6 +88,7 @@ class SearchActivity : AppCompatActivity() {
                 val adapter = CryptoAdapter(cryptoList)
                 rvCrypto.adapter = adapter
                 rvCrypto.layoutManager = LinearLayoutManager(this@SearchActivity)
+                rvCrypto.addItemDecoration(DividerItemDecoration(this@SearchActivity, LinearLayoutManager.VERTICAL))
             }
 
             override fun onFailure(

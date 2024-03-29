@@ -1,6 +1,7 @@
 package com.example.cryptotracker
 
 data class Crypto (
+    val id : String,
     val name : String,
     val symbol: String,
     val price: Double,
