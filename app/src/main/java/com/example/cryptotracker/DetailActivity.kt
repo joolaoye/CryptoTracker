@@ -1,62 +1,44 @@
 package com.example.cryptotracker
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 
-class SearchActivity : AppCompatActivity() {
-    private lateinit var cryptoList : MutableList<Crypto>
-    private lateinit var rvCrypto: RecyclerView
+class DetailActivity : AppCompatActivity() {
+    private lateinit var crypto_name_view : TextView
+    private lateinit var crypto_price_view : TextView
+    private lateinit var price_change_view : TextView
+
+    private lateinit var market_cap_value_view : TextView
+    private lateinit var trading_vol_24h_value_view : TextView
+    private lateinit var volume_value_view : TextView
+    private lateinit var supply_value_view : TextView
+    private lateinit var popularity_value_view : TextView
+    private lateinit var total_supply_value_view : TextView
 
     private val apiKey = "CG-7EGf9bH9nooFSJr3s6uPjRnC"
-    private lateinit var queryView : EditText
-    private var query = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_detailed_view)
 
-        val toolbar : Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        crypto_name_view = findViewById(R.id.crypto_name)
+        crypto_price_view = findViewById(R.id.crypto_price)
+        price_change_view = findViewById(R.id.price_change)
 
-        cryptoList = mutableListOf()
+        market_cap_value_view = findViewById(R.id.market_cap_value)
+        trading_vol_24h_value_view = findViewById(R.id.trading_vol_24h_value)
+        volume_value_view = findViewById(R.id.volume_value)
+        supply_value_view = findViewById(R.id.supply_value)
+        popularity_value_view = findViewById(R.id.popularity_value)
 
-        rvCrypto = findViewById(R.id.rV1)
+        val data = intent.getStringExtra("crypto") ?: "null"
 
-        queryView = findViewById(R.id.query)
-
-        queryView.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // Get the text from the EditText
-                query = queryView.text.toString().lowercase()
-
-                getCoin(query)
-
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-
-
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        getCoin(data)
     }
 
     private fun getCoin(id : String) {
@@ -68,7 +50,6 @@ class SearchActivity : AppCompatActivity() {
 
                 val cryptoArray = json.jsonArray
 
-                cryptoList = mutableListOf()
 
                 for (i in 0 until cryptoArray.length()) {
                     val cryptoObject = cryptoArray.getJSONObject(i)
@@ -112,31 +93,26 @@ class SearchActivity : AppCompatActivity() {
                         Double.POSITIVE_INFINITY
                     }
 
-                    cryptoList.add(
-                        Crypto(
-                            id,
-                            name,
-                            symbol,
-                            price,
-                            percent_change_24h,
-                            price_change_24h,
-                            imageUrl,
-                            market_cap,
-                            market_cap_rank,
-                            fully_diluted_valuation,
-                            circulating_supply,
-                            total_supply,
-                            max_supply
-                        )
+
+                    val current_crypto = Crypto(
+                        id,
+                        name,
+                        symbol,
+                        price,
+                        percent_change_24h,
+                        price_change_24h,
+                        imageUrl,
+                        market_cap,
+                        market_cap_rank,
+                        fully_diluted_valuation,
+                        circulating_supply,
+                        total_supply,
+                        max_supply
                     )
+
+                    updateUI(current_crypto)
+
                 }
-
-                Log.d("test", cryptoList.toString())
-
-                val adapter = CryptoAdapter(cryptoList, this@SearchActivity)
-                rvCrypto.adapter = adapter
-                rvCrypto.layoutManager = LinearLayoutManager(this@SearchActivity)
-                rvCrypto.addItemDecoration(DividerItemDecoration(this@SearchActivity, LinearLayoutManager.VERTICAL))
             }
 
             override fun onFailure(
@@ -148,5 +124,17 @@ class SearchActivity : AppCompatActivity() {
                 Log.d("Error", errorResponse)
             }
         }]
+    }
+
+    private fun updateUI(current_crypto: Crypto) {
+        crypto_name_view.text = "${current_crypto.name} price"
+        crypto_price_view.text = "$${current_crypto.price}"
+        price_change_view.text = "$${current_crypto.price_change_24h} (${current_crypto.percent_change_24h}%)"
+
+        market_cap_value_view.text = "$${current_crypto.market_cap}"
+        supply_value_view.text = "${current_crypto.circulating_supply}"
+        supply_value_view.text = "${current_crypto.circulating_supply}"
+        popularity_value_view.text = "#${current_crypto.market_cap_rank}"
+
     }
 }

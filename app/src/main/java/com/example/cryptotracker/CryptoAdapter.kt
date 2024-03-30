@@ -1,17 +1,19 @@
 package com.example.cryptotracker
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder>() {
+class CryptoAdapter(var cryptos : List<Crypto>, private val context: Context) : RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder>() {
 
     inner class CryptoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val row : CardView
@@ -23,6 +25,15 @@ class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAda
 
         init {
             row = itemView.findViewById(R.id.row)
+
+            row.setOnClickListener {
+                val intent = Intent(context, DetailActivity::class.java)
+                val position = adapterPosition
+                val item = cryptos[position]
+                intent.putExtra("crypto", item.id)
+                context.startActivity(intent)
+            }
+
             nameView = itemView.findViewById(R.id.name)
             symbolView = itemView.findViewById(R.id.symbol)
             priceView = itemView.findViewById(R.id.price)
@@ -61,9 +72,5 @@ class CryptoAdapter(var cryptos : List<Crypto>) : RecyclerView.Adapter<CryptoAda
             .load(cryptos[position].imageURL)
             .centerCrop()
             .into(holder.logoView)
-
-        holder.row.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "${cryptos[position].id}", Toast.LENGTH_SHORT).show()
-        }
     }
 }

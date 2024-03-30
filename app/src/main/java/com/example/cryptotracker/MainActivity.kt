@@ -99,18 +99,65 @@ class MainActivity : AppCompatActivity() {
 
                 for (i in 0 until cryptoArray.length()) {
                     val cryptoObject = cryptoArray.getJSONObject(i)
+
                     val id = cryptoObject.getString("id")
+
                     val name = cryptoObject.getString("name")
+
                     val symbol = cryptoObject.getString("symbol").uppercase()
+
                     val price = cryptoObject.getString("current_price").toDouble()
+
                     val temp = cryptoObject.getString("price_change_percentage_24h")
                     val percent_change_24h = String.format("%.2f", temp.toDouble()).toDouble()
+
+                    val price_change_24h = cryptoObject.getString("price_change_24h").toDouble()
+
                     val imageUrl = cryptoObject.getString("image")
 
-                    cryptoList.add(Crypto(id, name, symbol, price, percent_change_24h, imageUrl))
+                    val market_cap = cryptoObject.getString("market_cap").toDouble()
+
+                    val market_cap_rank = cryptoObject.getString("market_cap_rank").toInt()
+
+                    val fully_diluted_valuation = try {
+                        cryptoObject.getString("fully_diluted_valuation").toDouble()
+                    } catch (e: NumberFormatException) {
+                        Double.POSITIVE_INFINITY
+                    }
+
+                    val circulating_supply = cryptoObject.getString("circulating_supply").toDouble()
+
+                    val total_supply = try {
+                        cryptoObject.getString("total_supply").toDouble()
+                    } catch (e: NumberFormatException) {
+                        Double.POSITIVE_INFINITY
+                    }
+
+                    val max_supply: Double = try {
+                        cryptoObject.getString("max_supply").toDouble()
+                    } catch (e: NumberFormatException) {
+                        Double.POSITIVE_INFINITY
+                    }
+
+
+                    cryptoList.add(Crypto(
+                        id,
+                        name,
+                        symbol,
+                        price,
+                        percent_change_24h,
+                        price_change_24h,
+                        imageUrl,
+                        market_cap,
+                        market_cap_rank,
+                        fully_diluted_valuation,
+                        circulating_supply,
+                        total_supply,
+                        max_supply
+                    ))
                 }
 
-                val adapter = CryptoAdapter(cryptoList)
+                val adapter = CryptoAdapter(cryptoList, this@MainActivity)
                 rvCrypto.adapter = adapter
                 rvCrypto.layoutManager = LinearLayoutManager(this@MainActivity)
                 rvCrypto.addItemDecoration(DividerItemDecoration(this@MainActivity, LinearLayoutManager.VERTICAL))
