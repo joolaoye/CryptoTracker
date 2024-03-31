@@ -113,31 +113,21 @@ class MainActivity : AppCompatActivity() {
 
                     val price_change_24h = cryptoObject.getString("price_change_24h").toDouble()
 
+                    val trading_volume = cryptoObject.getString("total_volume")
+
                     val imageUrl = cryptoObject.getString("image")
 
-                    val market_cap = cryptoObject.getString("market_cap").toDouble()
+                    val market_cap = cryptoObject.getString("market_cap")
 
                     val market_cap_rank = cryptoObject.getString("market_cap_rank").toInt()
 
-                    val fully_diluted_valuation = try {
-                        cryptoObject.getString("fully_diluted_valuation").toDouble()
-                    } catch (e: NumberFormatException) {
-                        Double.POSITIVE_INFINITY
-                    }
+                    val fully_diluted_valuation = cryptoObject.getString("fully_diluted_valuation") ?: "null"
 
-                    val circulating_supply = cryptoObject.getString("circulating_supply").toDouble()
+                    val circulating_supply = cryptoObject.getString("circulating_supply")
 
-                    val total_supply = try {
-                        cryptoObject.getString("total_supply").toDouble()
-                    } catch (e: NumberFormatException) {
-                        Double.POSITIVE_INFINITY
-                    }
+                    val total_supply = cryptoObject.getString("total_supply") ?: "null"
 
-                    val max_supply: Double = try {
-                        cryptoObject.getString("max_supply").toDouble()
-                    } catch (e: NumberFormatException) {
-                        Double.POSITIVE_INFINITY
-                    }
+                    val max_supply = cryptoObject.getString("max_supply") ?: "null"
 
 
                     cryptoList.add(Crypto(
@@ -147,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                         price,
                         percent_change_24h,
                         price_change_24h,
+                        trading_volume,
                         imageUrl,
                         market_cap,
                         market_cap_rank,

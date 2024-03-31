@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/metadata"
                 tools:context=".MainActivity">
 
-                <com.yabu.livechart.view.LiveChart
+                <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/live_chart"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"/>
