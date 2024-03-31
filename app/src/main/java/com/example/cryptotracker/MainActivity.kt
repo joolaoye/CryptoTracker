@@ -95,58 +95,7 @@ class MainActivity : AppCompatActivity() {
 
                 val cryptoArray = json.jsonArray
 
-                cryptoList = mutableListOf()
-
-                for (i in 0 until cryptoArray.length()) {
-                    val cryptoObject = cryptoArray.getJSONObject(i)
-
-                    val id = cryptoObject.getString("id")
-
-                    val name = cryptoObject.getString("name")
-
-                    val symbol = cryptoObject.getString("symbol").uppercase()
-
-                    val price = cryptoObject.getString("current_price").toDouble()
-
-                    val temp = cryptoObject.getString("price_change_percentage_24h")
-                    val percent_change_24h = String.format("%.2f", temp.toDouble()).toDouble()
-
-                    val price_change_24h = cryptoObject.getString("price_change_24h").toDouble()
-
-                    val trading_volume = cryptoObject.getString("total_volume")
-
-                    val imageUrl = cryptoObject.getString("image")
-
-                    val market_cap = cryptoObject.getString("market_cap")
-
-                    val market_cap_rank = cryptoObject.getString("market_cap_rank").toInt()
-
-                    val fully_diluted_valuation = cryptoObject.getString("fully_diluted_valuation") ?: "null"
-
-                    val circulating_supply = cryptoObject.getString("circulating_supply")
-
-                    val total_supply = cryptoObject.getString("total_supply") ?: "null"
-
-                    val max_supply = cryptoObject.getString("max_supply") ?: "null"
-
-
-                    cryptoList.add(Crypto(
-                        id,
-                        name,
-                        symbol,
-                        price,
-                        percent_change_24h,
-                        price_change_24h,
-                        trading_volume,
-                        imageUrl,
-                        market_cap,
-                        market_cap_rank,
-                        fully_diluted_valuation,
-                        circulating_supply,
-                        total_supply,
-                        max_supply
-                    ))
-                }
+                cryptoList = parse_Json(cryptoArray)
 
                 val adapter = CryptoAdapter(cryptoList, this@MainActivity)
                 rvCrypto.adapter = adapter

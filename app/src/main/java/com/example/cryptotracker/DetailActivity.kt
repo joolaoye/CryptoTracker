@@ -83,59 +83,11 @@ class DetailActivity : AppCompatActivity() {
                 val cryptoArray = json.jsonArray
 
 
-                for (i in 0 until cryptoArray.length()) {
-                    val cryptoObject = cryptoArray.getJSONObject(i)
+                val current_crypto = parse_Json(cryptoArray)[0]
 
-                    val id = cryptoObject.getString("id")
+                percent_change = current_crypto.percent_change_24h
 
-                    val name = cryptoObject.getString("name")
-
-                    val symbol = cryptoObject.getString("symbol").uppercase()
-
-                    val price = cryptoObject.getString("current_price").toDouble()
-
-                    percent_change = cryptoObject.getString("price_change_percentage_24h").toDouble()
-                    val percent_change_24h = Math.abs(String.format("%.2f", percent_change).toDouble())
-
-
-                    val price_change_24h = Math.abs(cryptoObject.getString("price_change_24h").toDouble())
-
-                    val trading_volume = cryptoObject.getString("total_volume")
-
-                    val imageUrl = cryptoObject.getString("image")
-
-                    val market_cap = cryptoObject.getString("market_cap")
-
-                    val market_cap_rank = cryptoObject.getString("market_cap_rank").toInt()
-
-                    val fully_diluted_valuation = cryptoObject.getString("fully_diluted_valuation") ?: "null"
-
-                    val circulating_supply = cryptoObject.getString("circulating_supply")
-
-                    val total_supply = cryptoObject.getString("total_supply") ?: "null"
-
-                    val max_supply = cryptoObject.getString("max_supply") ?: "null"
-
-
-                    val current_crypto = Crypto(
-                        id,
-                        name,
-                        symbol,
-                        price,
-                        percent_change_24h,
-                        price_change_24h,
-                        trading_volume,
-                        imageUrl,
-                        market_cap,
-                        market_cap_rank,
-                        fully_diluted_valuation,
-                        circulating_supply,
-                        total_supply,
-                        max_supply
-                    )
-
-                    updateUI(current_crypto)
-                }
+                updateUI(current_crypto)
 
             }
 
@@ -242,7 +194,7 @@ class DetailActivity : AppCompatActivity() {
     private fun updateUI(current_crypto: Crypto) {
         crypto_name_view.text = "${current_crypto.name} price"
         crypto_price_view.text = "$${current_crypto.price}"
-        price_change_view.text = "$${current_crypto.price_change_24h} (${current_crypto.percent_change_24h}%)"
+        price_change_view.text = "$${current_crypto.price_change_24h} (${Math.abs(current_crypto.percent_change_24h)}%)"
 
         market_cap_value_view.text = "$${current_crypto.market_cap}"
         fully_diluted_val_view.text = "$${current_crypto.fully_diluted_valuation}"

@@ -55,10 +55,10 @@ class CryptoAdapter(var cryptos : List<Crypto>, private val context: Context) : 
         holder.priceView.text = "$${cryptos[position].price.toString()}"
         val percentChange = cryptos[position].percent_change_24h
         holder.percentChangeView.text = if (percentChange > 0) {
-            "+${percentChange.toString()}%"
+            "+${percentChange}%"
         }
         else {
-            "${percentChange.toString()}%"
+            "${percentChange}%"
         }
         val textColor = if ( cryptos[position].percent_change_24h < 0) {
             R.color.red
