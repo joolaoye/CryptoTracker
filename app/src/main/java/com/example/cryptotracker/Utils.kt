@@ -1,9 +1,7 @@
 package com.example.cryptotracker
 
-import android.util.Log
 import org.json.JSONArray
 import java.math.BigDecimal
-import java.math.BigInteger
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.pow
@@ -36,7 +34,7 @@ fun big_values(value : String) : String {
 
     if (value == "null") return "\u221E"
 
-    return BigInteger(value).toString()
+    return NumberFormat.getNumberInstance(Locale.getDefault()).format(BigDecimal(value))
 }
 
 fun parse_Json(json_array: JSONArray) :  MutableList<Crypto> {
@@ -58,7 +56,8 @@ fun parse_Json(json_array: JSONArray) :  MutableList<Crypto> {
 
         val price_change_24h = format_prices(Math.abs(cryptoObject.getString("price_change_24h").toDouble()).toString())
 
-        val trading_volume = cryptoObject.getString("total_volume")
+        temp = cryptoObject.getString("total_volume") ?: "null"
+        val trading_volume = big_values(cryptoObject.getString("total_volume"))
 
         val imageUrl = cryptoObject.getString("image")
 
