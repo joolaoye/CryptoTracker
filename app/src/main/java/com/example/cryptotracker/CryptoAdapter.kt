@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.math.BigDecimal
 
 class CryptoAdapter(var cryptos : List<Crypto>, private val context: Context) : RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder>() {
 
@@ -54,13 +55,13 @@ class CryptoAdapter(var cryptos : List<Crypto>, private val context: Context) : 
         holder.symbolView.text = cryptos[position].symbol
         holder.priceView.text = "$${cryptos[position].price.toString()}"
         val percentChange = cryptos[position].percent_change_24h
-        holder.percentChangeView.text = if (percentChange > 0) {
+        holder.percentChangeView.text = if (percentChange > BigDecimal("0.00001").toDouble()) {
             "+${percentChange}%"
         }
         else {
             "${percentChange}%"
         }
-        val textColor = if ( cryptos[position].percent_change_24h < 0) {
+        val textColor = if ( cryptos[position].percent_change_24h < BigDecimal("0.00001").toDouble()) {
             R.color.red
         }
         else {

@@ -57,7 +57,7 @@ fun parse_Json(json_array: JSONArray) :  MutableList<Crypto> {
         val price_change_24h = format_prices(Math.abs(cryptoObject.getString("price_change_24h").toDouble()).toString())
 
         temp = cryptoObject.getString("total_volume") ?: "null"
-        val trading_volume = big_values(cryptoObject.getString("total_volume"))
+        val trading_volume = big_values(temp)
 
         val imageUrl = cryptoObject.getString("image")
 
@@ -68,7 +68,8 @@ fun parse_Json(json_array: JSONArray) :  MutableList<Crypto> {
         temp = cryptoObject.getString("fully_diluted_valuation") ?: "null"
         val fully_diluted_valuation = big_values(temp)
 
-        val circulating_supply = cryptoObject.getString("circulating_supply")
+        temp = cryptoObject.getString("circulating_supply") ?: "null"
+        val circulating_supply = big_values(temp)
 
         temp = cryptoObject.getString("total_supply") ?: "null"
         val total_supply = big_values(temp)
