@@ -4,7 +4,7 @@
 
 Submitted by: **Joshua Olaoye**
 
-Time spent: **~144** hours spent in total
+Time spent: **~72** hours spent in total
 
 ## Summary
 
