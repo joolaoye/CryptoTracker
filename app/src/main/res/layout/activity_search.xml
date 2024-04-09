@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_theme">
+    android:layout_height="match_parent" >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/toolBarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,13 +30,7 @@
                 android:id="@+id/query"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:ems="10"
-                android:inputType="textVisiblePassword"
-                android:hint="Search"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textColorHighlight="@color/blue"
-                android:textCursorDrawable="@drawable/search_cursor"
+                android:theme="@style/searchBar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

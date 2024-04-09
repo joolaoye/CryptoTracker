@@ -8,9 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +19,6 @@ import okhttp3.Headers
 class MainActivity : AppCompatActivity() {
     private lateinit var cryptoList : MutableList<Crypto>
     private lateinit var rvCrypto: RecyclerView
-    private lateinit var footerLayout : ConstraintLayout
     private lateinit var showMoreButton : Button
     private var listSize = 50
     private var lastItemSeen = 0
@@ -35,32 +32,30 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar : Toolbar = findViewById(R.id.toolbar)
         toolbar.setTitle("All Assets")
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white))
+        toolbar.setTitleTextColor(getResources().getColor(R.color.appname_color))
         setSupportActionBar(toolbar)
 
-        footerLayout = findViewById(R.id.footer)
-        footerLayout.visibility = View.GONE
-
         showMoreButton = findViewById(R.id.showMore)
+        showMoreButton.visibility = View.GONE
 
         showMoreButton.setOnClickListener {
             lastItemSeen = listSize - 2
             listSize += 50
             getCoin(listSize)
-            footerLayout.visibility = View.GONE
+            showMoreButton.visibility = View.GONE
         }
 
         rvCrypto = findViewById(R.id.rV)
 
         rvCrypto.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState : Int) {
-                super.onScrollStateChanged(recyclerView, newState);
+                super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    footerLayout.visibility = View.VISIBLE
+                    showMoreButton.visibility = View.VISIBLE
 
                 } else {
-                    footerLayout.visibility = View.GONE
+                    showMoreButton.visibility = View.GONE
                 }
             }
         })
@@ -70,8 +65,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.nav_menu, menu);
-        return true;
+        menuInflater.inflate(R.menu.nav_menu, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dark_theme">
+    android:layout_height="wrap_content" >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:theme="@style/cardViewBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/dark_theme">
+        app:layout_constraintTop_toTopOf="parent" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,7 +53,6 @@
                 android:text="Bitcoin"
                 android:layout_marginLeft="8dp"
                 android:textSize="16sp"
-                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/logoContainer"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:text="BTC"
                 android:layout_marginLeft="8dp"
-                android:textColor="@color/neutral"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/logoContainer" />
@@ -75,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:text="$66,611.97"
                 android:textSize="16sp"
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:text="+3.38%"
                 android:textSize="16sp"
-                android:textColor="@color/green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

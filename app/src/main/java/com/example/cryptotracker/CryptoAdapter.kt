@@ -65,7 +65,7 @@ class CryptoAdapter(var cryptos : List<Crypto>, private val context: Context) : 
             R.color.red
         }
         else {
-            R.color.green
+            R.color.green_500
         }
         holder.percentChangeView.setTextColor(ContextCompat.getColor(holder.itemView.context, textColor))
 

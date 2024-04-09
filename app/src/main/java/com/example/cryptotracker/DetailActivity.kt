@@ -148,7 +148,9 @@ class DetailActivity : AppCompatActivity() {
         dataset.setCircleColor(Color.RED)
         dataset.setHighLightColor(Color.rgb(50, 53, 62))
 
+        Log.d("check", "$percent_change")
         if (percent_change < 0) {
+            Log.d("enter?", "yes")
             dataset.setColor(Color.RED)
             dataset.setFillColor(Color.RED)
         }
@@ -183,7 +185,7 @@ class DetailActivity : AppCompatActivity() {
         // Customize chart appearance
         live_chart.getDescription().setEnabled(false)
         live_chart.setDrawGridBackground(false)
-        live_chart.setBackgroundColor( getResources().getColor(R.color.dark_theme, theme))
+        live_chart.setBackgroundColor( getResources().getColor(R.color.black_200, theme))
 
         val legend = live_chart.legend
         legend.isEnabled = false
@@ -194,7 +196,7 @@ class DetailActivity : AppCompatActivity() {
     private fun updateUI(current_crypto: Crypto) {
         crypto_name_view.text = "${current_crypto.name} price"
         crypto_price_view.text = "$${current_crypto.price}"
-        price_change_view.text = "$${current_crypto.price_change_24h} (${Math.abs(current_crypto.percent_change_24h)}%)"
+        price_change_view.text = "$${current_crypto.price_change_24h} (${Math.abs(percent_change)}%)"
 
         market_cap_value_view.text = "$${current_crypto.market_cap}"
         fully_diluted_val_view.text = "$${current_crypto.fully_diluted_valuation}"

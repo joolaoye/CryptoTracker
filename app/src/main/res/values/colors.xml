@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="dark_theme">#0A0B0D</color>
-    <color name="green">#295F4A</color>
+    <color name="white_200">#FCFCFC</color>
+    <color name="white_500">#FFFFFF</color>
+    <color name="white_700">#CCCCCC</color>
+
+    <color name="black_200">#929AAB</color>
+    <color name="black_500">#0A0B0D</color>
+    <color name="black_700">#070709</color>
+
+    <color name="green_200">#98D2BC</color>
+    <color name="green_500">#295F4A</color>
+    <color name="green_700">#19392D</color>
+
+
     <color name="red">#D0687C</color>
-    <color name="neutral">#686D71</color>
-    <color name="blue">#3873F5</color>
+
+    <color name="grey_200">#C2C5C7</color>
+    <color name="grey_500">#686D71</color>
+    <color name="grey_700">#404345</color>
+
+    <color name="blue_200">#B1C9FB</color>
+    <color name="blue_500">#3873F5</color>
+    <color name="blue_700">#093CAA</color>
+
+    <color name="icon_background">#000000</color>
+    <color name="appname_color">#000000</color>
+
 </resources>
